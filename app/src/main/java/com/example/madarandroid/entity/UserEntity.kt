@@ -2,6 +2,7 @@ package com.example.madarandroid.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
 @Entity(tableName = tableName)
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
