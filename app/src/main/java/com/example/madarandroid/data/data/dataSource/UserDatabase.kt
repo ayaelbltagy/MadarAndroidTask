@@ -6,7 +6,7 @@ import com.example.madarandroid.data.data.entity.UserEntity
 
 @Database(
     entities = [UserEntity::class],
-    version = 1
+    version = 2
 )
 abstract  class UserDatabase : RoomDatabase(){
     abstract val dao: UserInfoDao

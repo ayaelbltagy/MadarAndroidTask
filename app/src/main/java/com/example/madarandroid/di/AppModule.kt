@@ -23,6 +23,7 @@ object AppModule {
             UserDatabase::class.java,
             "MyDataBase"
         )
+            .fallbackToDestructiveMigration()
             .build()
     }
 

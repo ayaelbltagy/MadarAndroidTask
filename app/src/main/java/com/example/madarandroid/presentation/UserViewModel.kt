@@ -34,12 +34,32 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
     }
 
 
+    // views values
     private val _userName = MutableStateFlow("")
     val userName = _userName.asStateFlow()
-
 
     fun setUserName(name: String) {
         _userName.tryEmit(name)
     }
 
+    private val _userAge= MutableStateFlow("")
+    val userAge = _userAge.asStateFlow()
+
+    fun setUserAge(age: String) {
+        _userAge.tryEmit(age)
+    }
+
+    private val _userJob= MutableStateFlow("")
+    val userJob = _userJob.asStateFlow()
+
+    fun setUserJob(age: String) {
+        _userJob.tryEmit(age)
+    }
+
+    private val _userGender= MutableStateFlow("")
+    val userGender = _userGender.asStateFlow()
+
+    fun setUserGender(age: String) {
+        _userGender.tryEmit(age)
+    }
 }
