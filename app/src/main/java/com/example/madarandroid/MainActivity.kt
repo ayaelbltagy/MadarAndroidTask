@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.madarandroid.presentation.HomeScreen
+import com.example.madarandroid.presentation.NavigationStack
 import com.example.madarandroid.ui.theme.MadarANDROIDTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
+                  //  HomeScreen()
+                    NavigationStack()
                 }
             }
         }

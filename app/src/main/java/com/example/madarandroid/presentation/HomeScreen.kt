@@ -2,6 +2,8 @@
 
 package com.example.madarandroid.presentation
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,10 +14,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -26,19 +26,27 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madarandroid.data.data.entity.UserEntity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+
+
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
 
     Scaffold(
         topBar = {
@@ -52,8 +60,7 @@ fun HomeScreen() {
               .padding(paddingValues)
                .fillMaxSize()) {
                  val viewModel = hiltViewModel<UserViewModel>()
-                 Content(viewModel = viewModel)
-           //     Text("This is the Main Body of the Application", modifier = Modifier.align(Alignment.Center))
+                 Content(navController,viewModel = viewModel)
           }
 
         }
@@ -63,10 +70,10 @@ fun HomeScreen() {
 }
 
 @Composable
-fun Content(viewModel: UserViewModel) {
+fun Content(navController: NavController,viewModel: UserViewModel) {
 
-    LaunchedEffect(key1 = true, block = {
-        viewModel.getUsers()
+   LaunchedEffect(key1 = true, block = {
+       viewModel.getUsers()
     })
 
     Column(
@@ -80,14 +87,14 @@ fun Content(viewModel: UserViewModel) {
                 .fillMaxWidth()
                 .fillMaxHeight(0.5f), contentAlignment = Alignment.TopCenter
         ) {
-            TopContent(viewModel = viewModel)
+            TopContent(navController,viewModel = viewModel)
         }
 
     }
 }
 
 @Composable
-fun TopContent(
+fun TopContent(navController: NavController,
     viewModel: UserViewModel
 ) {
 
@@ -121,7 +128,7 @@ fun TopContent(
         Spacer(modifier = Modifier.height(15.dp))
 
         OutlinedTextField(
-            value = name,
+            value = "",
             onValueChange = {
                 onNameEntered(it)
             },
@@ -135,7 +142,7 @@ fun TopContent(
         Spacer(modifier = Modifier.height(15.dp))
 
         OutlinedTextField(
-            value = name,
+            value = "",
             onValueChange = {
                 onNameEntered(it)
             },
@@ -148,7 +155,7 @@ fun TopContent(
         Spacer(modifier = Modifier.height(15.dp))
 
         OutlinedTextField(
-            value = name,
+            value = "",
             onValueChange = {
                 onNameEntered(it)
             },
@@ -160,7 +167,9 @@ fun TopContent(
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedButton(onClick = {
-            onSubmit(
+            navController.navigate(route = Screen.Detail.route + "?text=${name}")
+
+             onSubmit(
                 UserEntity(
                     userName = name,
                     userAge = 1 ,
@@ -168,10 +177,14 @@ fun TopContent(
                     userGender= ""
                 )
             )
+            Log.i("mydb", viewModel.usersList.value.size.toString())
+
         }) {
             Text(text = "Submit")
         }
 
     }
 }
+
+
 
