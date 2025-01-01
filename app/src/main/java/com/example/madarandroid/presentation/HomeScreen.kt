@@ -3,26 +3,20 @@
 package com.example.madarandroid.presentation
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,34 +34,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madarandroid.data.data.entity.UserEntity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
+
 
 
 
@@ -86,8 +61,7 @@ fun HomeScreen(viewModel:UserViewModel,navController: NavController) {
              Box(modifier = Modifier
                  .padding(paddingValues)
                  .fillMaxSize()) {
-              //   val viewModel = hiltViewModel<UserViewModel>()
-                 Content(navController,viewModel = viewModel)
+                  Content(navController,viewModel = viewModel)
           }
 
         }
@@ -146,10 +120,6 @@ fun TopContent(navController: NavController,
             return@remember viewModel::setUserJob
         }
 
-        val gender by viewModel.userGender.collectAsStateWithLifecycle()
-        val onGenderEntered: (value: String) -> Unit = remember {
-            return@remember viewModel::setUserGender
-        }
 
         val onSubmit: (value: UserEntity) -> Unit = remember {
             return@remember viewModel::insertUser
@@ -198,59 +168,58 @@ fun TopContent(navController: NavController,
         )
         Spacer(modifier = Modifier.height(15.dp))
 
+        var expanded by remember { mutableStateOf(false) }
+        val options = listOf("Male", "Female")
+        var selectedOptionText by remember { mutableStateOf(options[0]) }
 
-     //   gender()
+        Box {
+            Button(onClick = { expanded = !expanded }) {
+                Text(selectedOptionText)
+                Icon(
+                    imageVector = Icons.Filled.ArrowDropDown,
+                    contentDescription = null,
+                )
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+            ) {
+                options.forEach { label ->
+                    DropdownMenuItem(
+                        onClick = {
+                            selectedOptionText = label
+                            expanded = false
+
+                        },
+                        text = { Text( label) }
+                    )
+
+                }
+            }
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedButton(onClick = {
-            navController.navigate(route = Screen.Detail.route)
-              onSubmit(
-                UserEntity(
-                    userName = name,
-                    userAge = age,
-                    userJobTitle = job,
-                    userGender= ""
+            if(name.isNotEmpty()){
+                onSubmit(
+                    UserEntity(
+                        userName = name,
+                        userAge = age,
+                        userJobTitle = job,
+                        userGender= selectedOptionText
+                    )
                 )
-            )
+            }
+
+            navController.navigate(route = Screen.Detail.route)
+
             Log.i("mydb", viewModel.usersList.value.size.toString())
 
         }) {
             Text(text = "Submit")
         }
 
-    }
-}
-
-
-@Composable
-fun gender() {
-
-    var expanded by remember { mutableStateOf(false) }
-    val options = listOf("Male", "Female")
-
-    Box {
-        Button(onClick = { expanded = !expanded }) {
-            Text("choose user gender please")
-            Icon(
-                imageVector = Icons.Filled.ArrowDropDown,
-                contentDescription = null,
-            )
-        }
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-        ) {
-            options.forEach { label ->
-                DropdownMenuItem(text = {
-                   // Text(text = label)
-                },
-                    onClick = {
-                      //  expanded = false
-
-                    })
-            }
-        }
     }
 }
 

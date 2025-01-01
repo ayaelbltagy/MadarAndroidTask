@@ -75,12 +75,28 @@ fun listItem(item :UserEntity
                 modifier = Modifier.padding(10.dp)
             ) {
                 Text(
-                    text = item.userName+ " " + item.userJobTitle,
+                    text = "User Name "+" "+item.userName,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
-
+                Text(
+                    text ="User Gender"+" "+item.userGender,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text ="User Age"+" "+item.userAge,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text ="User Job"+"" +item.userJobTitle,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
 
         }

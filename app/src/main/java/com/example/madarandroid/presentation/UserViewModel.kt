@@ -56,10 +56,10 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
         _userJob.tryEmit(age)
     }
 
-    private val _userGender= MutableStateFlow("")
-    val userGender = _userGender.asStateFlow()
-
-    fun setUserGender(age: String) {
-        _userGender.tryEmit(age)
-    }
+//    private val _userGender= MutableStateFlow("")
+//    val userGender = _userGender.asStateFlow()
+//
+//    fun setUserGender(age: String) {
+//        _userGender.tryEmit(age)
+//    }
 }
