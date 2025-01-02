@@ -19,8 +19,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,6 +48,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -53,6 +57,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.madarandroid.ui.theme.MadarANDROIDTheme
 import kotlinx.coroutines.launch
 
 
@@ -103,7 +108,6 @@ fun Content(navController: NavController,viewModel: UserViewModel) {
 
     }
 }
-
 @Composable
 fun TopContent(navController: NavController,
     viewModel: UserViewModel
@@ -223,8 +227,6 @@ fun TopContent(navController: NavController,
                 )
             }
             else{
-
-
             }
             navController.navigate(route = Screen.Detail.route)
             Log.i("mydb", viewModel.usersList.value.size.toString())
@@ -236,34 +238,3 @@ fun TopContent(navController: NavController,
     }
 
 }
-
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Composable
-fun Snackbar () {
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        content = {
-
-            Button(
-                onClick = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = "Please fill data",
-                            actionLabel = "Click me",
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-                })
-            {
-                Text(text = "")
-            }
-        }
-    )
-}
-
-
-
