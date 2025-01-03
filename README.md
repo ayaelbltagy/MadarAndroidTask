@@ -6,10 +6,16 @@ is has two page first page for take this info and save it local database. and sc
 
 
 3. Architecture
-I depend on Modulations and DI to inject this data for view model
+I depend on Modulations and DI to inject this data for view model.
 Repository is responable for get source of data which in our case is room database.
 About Design pattern : MVVM -> to separates views from business logic.
 Kotlin coroutines -> to simplify code that executes asynchronously.
  Dagger hilt -> for DI Jetpack compose.
  Material Design 3 -> for ui design.
+
+4. Tools
+Android Studio Koala 2024
+JDK 17.0.11
+Android Gradle Plugin version 8.6.1
+Gradle version 8.7
 
